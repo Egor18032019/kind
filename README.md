@@ -1,17 +1,21 @@
-kind create cluster --config cluster.yaml -n simbir
-kind delete cluster -n simbir
-
-cd existing_repo
-git remote add origin https://gitlab.com/simbirsoft1/devops-workshop-2023-12/prishedko.egor/exercise-02.git
-git branch -M develop
-git push -uf origin develop
-
+Установить кластер командой
+```shell
+kind create cluster --config kind.yaml -n simbir
+```
+Установить манифест ns командой
+```shell
+kubectl apply -f ns.yaml
+```
+[//]: # (// todo не сделал ns для бд)
+Установить манифест бд командой
+```shell
+kubectl kubectl apply -f postgresql.yaml
+```
+Pull собранного образа
 ```shell
 docker pull egor140512/exercise:0.1
 ```
-
-В репозитории задания exercise-02 должны присутствовать манифесты:
-kind.yml - манифест с описанием развертывания kind.cluster
-ns.yml - манифест с описанием развертывания неймспейса
-postgresql.yml - манифест с StatefullSet для развертывания базы данных
-ignite.sh - скрипт для развертывания задания
+```shell
+kind delete cluster -n simbir
+```
+или запустить скрипт ignite.sh(но это не точно)
