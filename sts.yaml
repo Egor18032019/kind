@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: parrotstatefulset
+
+spec:
+  selector:
+    matchLabels:
+      app: parrot # has to match .spec.template.metadata.labels
+  serviceName: "parrot"
+  replicas: 3 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: parrot # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: parrot
+          image: vregret/parrot:0.5
+          ports:
+            - containerPort: 80

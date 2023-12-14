@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: exercise-0
+  labels:
+    app: exercise-postgres
+spec:
+  selector:
+    matchLabels:
+      app: db # has to match .spec.template.metadata.labels
+  serviceName: "postgres"
+  replicas: 2 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: db # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: postgres
+          env:
+            # PostgreSQL configuration
+            - name: POSTGRES_USER
+              value: "app"
+            - name: POSTGRES_PASSWORD
+              value: "worker"
+            - name: POSTGRES_DB
+              value: "worker"
+            - name: POSTGRESQL_LOG_HOSTNAME
+              value: "true"
+#              todo обсудить как из .env брать переменные
+          image: postgres:14-alpine
+          ports:
+            - containerPort: 5432
