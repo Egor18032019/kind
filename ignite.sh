@@ -1,4 +1,5 @@
-bash -c "kind create cluster --config kind.yaml -n simbir"
-bash -c "kubectl apply -f ns.yaml"
-bash -c "kubectl apply -f postgresql.yaml"
+#!/bin/bash
+kind create cluster --config kind.yaml -n simbir
+kubectl apply -f ns.yaml
+kubectl apply -f postgresql.yaml
 

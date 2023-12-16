@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: exercise-0
+  name: exercise-02
   labels:
     app: exercise-postgres
 spec:
@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: db # has to match .spec.template.metadata.labels
   serviceName: "postgres"
-  replicas: 2 # by default is 1
+  replicas: 1
   template:
     metadata:
       labels:
