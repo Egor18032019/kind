@@ -18,4 +18,5 @@ docker pull egor140512/exercise:0.1
 ```shell
 kind delete cluster -n simbir
 ```
-или запустить скрипт ignite.sh(но это не точно)
+или запустить скрипт ignite.sh
+git remote add me https://github.com/Egor18032019/kind.git
