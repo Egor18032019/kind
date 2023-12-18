@@ -8,11 +8,13 @@ metadata:
 spec:
   containers:
     - name: foo-app
-#      image: egor140512/exercise:0.1
-      image: vregret/parrot:0.6
-#      image: nginx:stable
+      image: egor140512/exercise:0.4
+      #      image: vregret/parrot:0.6
+      env:
+        - name: POSTGRESQL_URL
+          value: postgresql://worker:worker@exercise-postgres/app
       ports:
-        - containerPort: 80
+        - containerPort: 5001
           name: web
 ---
 kind: Service
@@ -34,12 +36,15 @@ kind: Ingress
 metadata:
   name: frontend-foo-app
   namespace: exercise-02
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+#    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     # Правила роутинга представляют собой ровно то,
     # что можно ожидать — хост, протокол, пути, на какой
     # сервис (и какой порт) перенаправить трафик:
-     - http:
+    - http:
         paths:
           - path: /
             pathType: Prefix

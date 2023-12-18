@@ -8,7 +8,9 @@ metadata:
     name: postgres-service
 spec:
   ports:
-    - port: 5432
+    - name: psql
+      port: 5432
+      targetPort: 5432
   selector:
     app: db
   clusterIP: None
@@ -20,6 +22,7 @@ metadata:
   namespace: exercise-02
   labels:
     app: exercise-postgres
+    service: psql
 spec:
   selector:
     matchLabels:
@@ -34,6 +37,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: postgres
+          image: postgres:14-alpine
           env:
             # PostgreSQL configuration
             - name: POSTGRES_USER
@@ -46,7 +50,6 @@ spec:
               value: "true"
             - name: PGDATA
               value: /var/lib/postgresql/data
-          image: postgres:14-alpine
           ports:
             - containerPort: 5432
           volumeMounts:
